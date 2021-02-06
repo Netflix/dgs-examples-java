@@ -1,8 +1,8 @@
 package com.example.demo.datafetchers;
 
 import com.example.demo.generated.DgsConstants;
-import com.example.demo.generated.types.Show;
 import com.example.demo.services.ShowsService;
+import com.example.demo.types.InternalShow;
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsData;
 import com.netflix.graphql.dgs.InputArgument;
@@ -21,9 +21,10 @@ public class ShowsDatafetcher {
     /**
      * This datafetcher resolves the shows field on Query.
      * It uses an @InputArgument to get the titleFilter from the Query if one is defined.
+     * @return
      */
     @DgsData(parentType = DgsConstants.QUERY_TYPE, field = DgsConstants.QUERY.Shows)
-    public List<Show> shows(@InputArgument("titleFilter") String titleFilter) {
+    public List<InternalShow> shows(@InputArgument("titleFilter") String titleFilter) {
         if (titleFilter == null) {
             return showsService.shows();
         }

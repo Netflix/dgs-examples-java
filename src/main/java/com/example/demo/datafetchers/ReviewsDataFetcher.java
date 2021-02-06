@@ -6,6 +6,7 @@ import com.example.demo.generated.types.Review;
 import com.example.demo.generated.types.Show;
 import com.example.demo.generated.types.SubmittedReview;
 import com.example.demo.services.DefaultReviewsService;
+import com.example.demo.types.InternalShow;
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsData;
 import com.netflix.graphql.dgs.DgsDataFetchingEnvironment;
@@ -40,7 +41,7 @@ public class ReviewsDataFetcher {
         DataLoader<Integer, List<Review>> reviewsDataLoader = dfe.getDataLoader(ReviewsDataLoader.class);
 
         //Because the reviews field is on Show, the getSource() method will return the Show instance.
-        Show show = dfe.getSource();
+        InternalShow show = dfe.getSource();
 
         //Load the reviews from the DataLoader. This call is async and will be batched by the DataLoader mechanism.
         return reviewsDataLoader.load(show.getId());

@@ -13,6 +13,7 @@ import com.example.demo.generated.types.SubmittedReview;
 import com.example.demo.scalars.DateTimeScalar;
 import com.example.demo.services.DefaultReviewsService;
 import com.example.demo.services.ShowsService;
+import com.example.demo.types.InternalShow;
 import com.jayway.jsonpath.TypeRef;
 import com.netflix.graphql.dgs.DgsQueryExecutor;
 import com.netflix.graphql.dgs.autoconfig.DgsAutoConfiguration;
@@ -47,7 +48,7 @@ class ShowsDatafetcherTest {
 
     @BeforeEach
     public void before() {
-        Mockito.when(showsService.shows()).thenAnswer(invocation -> List.of(Show.newBuilder().id(1).title("mock title").releaseYear(2020).build()));
+        Mockito.when(showsService.shows()).thenAnswer(invocation -> List.of(new InternalShow(1, Show.newBuilder().title("mock title").releaseYear(2020).build())));
         Mockito.when(reviewsService.reviewsForShows(List.of(1)))
                 .thenAnswer(invocation ->
                         Map.of(1, List.of(
