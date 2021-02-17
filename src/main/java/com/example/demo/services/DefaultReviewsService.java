@@ -95,6 +95,21 @@ public class DefaultReviewsService implements ReviewsService {
         logger.info("Review added {}", review);
     }
 
+    public void saveReviews(List<SubmittedReview> reviewsInput) {
+        reviewsInput.forEach(reviewInput -> {
+            var reviewsForShow = reviews.computeIfAbsent(reviewInput.getShowId(), (key) -> new ArrayList<>());
+            var review = Review.newBuilder()
+                    .username(reviewInput.getUsername())
+                    .starScore(reviewInput.getStarScore())
+                    .submittedDate(OffsetDateTime.now()).build();
+
+            reviewsForShow.add(review);
+            reviewsStream.next(review);
+
+            logger.info("Review added {}", review);
+        });
+    }
+
     public Publisher<Review> getReviewsPublisher() {
         return reviewsPublisher;
     }
