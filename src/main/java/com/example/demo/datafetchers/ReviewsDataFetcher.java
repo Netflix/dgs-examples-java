@@ -34,7 +34,7 @@ public class ReviewsDataFetcher {
      * Although the DataLoader is called for each individual show ID, it will batch up the actual loading to a single method call to the "load" method in the ReviewsDataLoader.
      * For this to work correctly, the datafetcher needs to return a CompletableFuture.
      */
-    @DgsData(parentType = DgsConstants.SHOW.TYPE_NAME, field = DgsConstants.SHOW.Reviews)
+    //@DgsData(parentType = DgsConstants.SHOW.TYPE_NAME, field = DgsConstants.SHOW.Reviews)
     public CompletableFuture<List<Review>> reviews(DgsDataFetchingEnvironment dfe) {
         //Instead of loading a DataLoader by name, we can use the DgsDataFetchingEnvironment and pass in the DataLoader classname.
         DataLoader<Integer, List<Review>> reviewsDataLoader = dfe.getDataLoader(ReviewsDataLoader.class);

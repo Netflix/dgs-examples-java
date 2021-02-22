@@ -68,6 +68,7 @@ public class DefaultReviewsService implements ReviewsService {
     /**
      * Hopefully nobody calls this for multiple shows within a single query, that would indicate the N+1 problem!
      */
+    @Override
     public List<Review> reviewsForShow(Integer showId) {
         return reviews.get(showId);
     }
@@ -76,12 +77,14 @@ public class DefaultReviewsService implements ReviewsService {
      * This is the method we want to call when loading reviews for multiple shows.
      * If this code was backed by a relational database, it would select reviews for all requested shows in a single SQL query.
      */
+    @Override
     public Map<Integer, List<Review>> reviewsForShows(List<Integer> showIds) {
         logger.info("Loading reviews for shows {}", showIds.stream().map(String::valueOf).collect(Collectors.joining(", ")));
 
         return reviews.entrySet().stream().filter(entry -> showIds.contains(entry.getKey())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
+    @Override
     public void saveReview(SubmittedReview reviewInput) {
         var reviewsForShow = reviews.computeIfAbsent(reviewInput.getShowId(), (key) -> new ArrayList<>());
         var review = Review.newBuilder()
@@ -95,6 +98,7 @@ public class DefaultReviewsService implements ReviewsService {
         logger.info("Review added {}", review);
     }
 
+    @Override
     public Publisher<Review> getReviewsPublisher() {
         return reviewsPublisher;
     }
