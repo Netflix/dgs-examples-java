@@ -1,11 +1,4 @@
-type Query {
-    shows(titleFilter: String): [Show]
-}
 
-type Mutation {
-    addReview(review: SubmittedReview): [Review]
-    addArtwork(showId: Int!, upload: Upload!): [Image]! @skipcodegen
-}
 
 type Subscription {
     reviewAdded(showId: Int!): Review

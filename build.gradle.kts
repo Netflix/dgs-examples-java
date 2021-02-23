@@ -29,11 +29,13 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 repositories {
 	mavenCentral()
 	jcenter()
+	mavenLocal()
 }
 
 dependencies {
-	implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter:3.1.1")
-
+	implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter:3.6.0-SNAPSHOT")
+	implementation("com.netflix.graphql.dgs:graphql-dgs-spring-data:3.6.0-SNAPSHOT")
+	implementation("net.minidev:json-smart:2.3")
 	implementation("com.graphql-java:graphql-java-extended-scalars:1.0")
 	implementation("com.github.javafaker:javafaker:1.+")
 
