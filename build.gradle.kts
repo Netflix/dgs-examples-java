@@ -19,7 +19,7 @@ plugins {
 	id("java")
 	id("org.springframework.boot") version "2.4.0"
 	id("io.spring.dependency-management") version "1.0.10.RELEASE"
-	id("com.netflix.dgs.codegen") version "4.0.12"
+	id("com.netflix.dgs.codegen") version "4.2.0"
 }
 
 group = "com.example"
@@ -28,11 +28,10 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
 	mavenCentral()
-	jcenter()
 }
 
 dependencies {
-	implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter:3.1.1")
+	implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter:latest.release")
 
 	implementation("com.graphql-java:graphql-java-extended-scalars:1.0")
 	implementation("com.github.javafaker:javafaker:1.+")
