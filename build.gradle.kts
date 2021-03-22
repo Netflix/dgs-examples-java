@@ -18,8 +18,8 @@
 plugins {
 	id("java")
 	id("org.springframework.boot") version "2.4.0"
-	id("io.spring.dependency-management") version "1.0.10.RELEASE"
-	id("com.netflix.dgs.codegen") version "4.2.0"
+	id("io.spring.dependency-management") version "1.0.11.RELEASE"
+	id("com.netflix.dgs.codegen") version "4.4.1"
 }
 
 group = "com.example"
@@ -28,10 +28,12 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
 	mavenCentral()
+	maven("https://netflixoss.jfrog.io/artifactory/maven-oss-candidates/")
+	mavenLocal()
 }
 
 dependencies {
-	implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter:latest.release")
+	implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter:3.9.3")
 
 	implementation("com.graphql-java:graphql-java-extended-scalars:1.0")
 	implementation("com.github.javafaker:javafaker:1.+")
@@ -56,3 +58,4 @@ tasks.withType<JavaCompile> {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
