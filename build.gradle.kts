@@ -19,7 +19,7 @@ plugins {
 	id("java")
 	id("org.springframework.boot") version "2.4.0"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
-	id("com.netflix.dgs.codegen") version "4.4.1"
+	id("com.netflix.dgs.codegen") version "4.4.3"
 }
 
 group = "com.example"
@@ -28,15 +28,11 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
 	mavenCentral()
-	maven("https://netflixoss.jfrog.io/artifactory/maven-oss-candidates/")
-	mavenLocal()
 }
 
 dependencies {
-    implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:latest.release"))
-
+	implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:3.10.2"))
 	implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter")
-
 	implementation("com.graphql-java:graphql-java-extended-scalars:1.0.+")
 	implementation("com.github.javafaker:javafaker:1.+")
 
@@ -44,7 +40,6 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
-@OptIn(kotlin.ExperimentalStdlibApi::class)
 tasks.withType<com.netflix.graphql.dgs.codegen.gradle.GenerateJavaTask> {
 	generateClient = true
 	packageName = "com.example.demo.generated"
