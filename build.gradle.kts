@@ -17,7 +17,7 @@
 
 plugins {
 	id("java")
-	id("org.springframework.boot") version "2.4.0"
+	id("org.springframework.boot") version "2.3.9.RELEASE"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
 	id("com.netflix.dgs.codegen") version "4.4.3"
 }
@@ -35,8 +35,13 @@ dependencies {
 	implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter")
 	implementation("com.graphql-java:graphql-java-extended-scalars:1.0.+")
 	implementation("com.github.javafaker:javafaker:1.+")
+	implementation("org.springframework.boot:spring-boot-starter-web:2.3.9.RELEASE")
+	// Add dependencies for prometheus endpoint and gql prometheus metrics.
+	// TODO upgrade on graphql-dgs-spring-boot-micrometer the micrometer version to avoid Runtime problems
+	implementation("org.springframework.boot:spring-boot-starter-actuator:2.3.9.RELEASE")
+	implementation("io.micrometer:micrometer-registry-prometheus:1.5.11")
+	implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-micrometer")
 
-	implementation("org.springframework.boot:spring-boot-starter-web")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
