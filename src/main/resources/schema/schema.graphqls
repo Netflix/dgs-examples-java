@@ -34,8 +34,10 @@ input SubmittedReview {
 
 type Image {
     url: String
+    boh: JSON
 }
 
 scalar DateTime
 scalar Upload
 directive @skipcodegen on FIELD_DEFINITION
+scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
