@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -48,7 +47,7 @@ public class ReviewSubscriptionTest {
         Publisher<ExecutionResult> reviewPublisher = executionResult.getData();
         List<Review> reviews = new CopyOnWriteArrayList<>();
 
-        reviewPublisher.subscribe(new Subscriber<>() {
+        reviewPublisher.subscribe(new Subscriber<ExecutionResult>() {
             @Override
             public void onSubscribe(Subscription s) {
                 s.request(2);
