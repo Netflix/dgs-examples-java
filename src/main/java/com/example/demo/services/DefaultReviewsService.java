@@ -79,12 +79,15 @@ public class DefaultReviewsService implements ReviewsService {
     public Map<Integer, List<Review>> reviewsForShows(List<Integer> showIds) {
         logger.info("Loading reviews for shows {}", showIds.stream().map(String::valueOf).collect(Collectors.joining(", ")));
 
-        return reviews.entrySet().stream().filter(entry -> showIds.contains(entry.getKey())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        return reviews
+                .entrySet()
+                .stream()
+                .filter(entry -> showIds.contains(entry.getKey())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public void saveReview(SubmittedReview reviewInput) {
-        var reviewsForShow = reviews.computeIfAbsent(reviewInput.getShowId(), (key) -> new ArrayList<>());
-        var review = Review.newBuilder()
+        List<Review> reviewsForShow = reviews.computeIfAbsent(reviewInput.getShowId(), (key) -> new ArrayList<>());
+        Review review = Review.newBuilder()
                 .username(reviewInput.getUsername())
                 .starScore(reviewInput.getStarScore())
                 .submittedDate(OffsetDateTime.now()).build();
@@ -97,8 +100,8 @@ public class DefaultReviewsService implements ReviewsService {
 
     public void saveReviews(List<SubmittedReview> reviewsInput) {
         reviewsInput.forEach(reviewInput -> {
-            var reviewsForShow = reviews.computeIfAbsent(reviewInput.getShowId(), (key) -> new ArrayList<>());
-            var review = Review.newBuilder()
+            List<Review> reviewsForShow = reviews.computeIfAbsent(reviewInput.getShowId(), (key) -> new ArrayList<>());
+            Review review = Review.newBuilder()
                     .username(reviewInput.getUsername())
                     .starScore(reviewInput.getStarScore())
                     .submittedDate(OffsetDateTime.now()).build();

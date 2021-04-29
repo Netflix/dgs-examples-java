@@ -3,13 +3,14 @@ package com.example.demo.services;
 import com.example.demo.generated.types.Show;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class ShowsServiceImpl implements ShowsService {
     @Override
     public List<Show> shows() {
-        return List.of(
+        return Arrays.asList(
                 Show.newBuilder().id(1).title("Stranger Things").releaseYear(2016).build(),
                 Show.newBuilder().id(2).title("Ozark").releaseYear(2017).build(),
                 Show.newBuilder().id(3).title("The Crown").releaseYear(2016).build(),
