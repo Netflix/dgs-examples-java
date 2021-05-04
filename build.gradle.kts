@@ -31,12 +31,12 @@ repositories {
 }
 
 dependencies {
-	implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:3.10.2"))
+	implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:latest.release"))
 	implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter")
-	implementation("com.graphql-java:graphql-java-extended-scalars:1.0.+")
+    implementation("com.netflix.graphql.dgs:graphql-dgs-extended-scalars")
+	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.github.javafaker:javafaker:1.+")
 
-	implementation("org.springframework.boot:spring-boot-starter-web")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
