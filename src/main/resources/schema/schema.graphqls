@@ -16,7 +16,7 @@ type Show {
     id: Int
     title: String
     releaseYear: Int
-    reviews: [Review]
+    reviews(minScore:Int): [Review]
     artwork: [Image]
 }
 

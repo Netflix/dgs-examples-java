@@ -1,9 +1,8 @@
 package com.example.demo.datafetchers;
 
-import com.example.demo.generated.DgsConstants;
 import com.example.demo.generated.types.Image;
 import com.netflix.graphql.dgs.DgsComponent;
-import com.netflix.graphql.dgs.DgsData;
+import com.netflix.graphql.dgs.DgsMutation;
 import com.netflix.graphql.dgs.InputArgument;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,16 +17,16 @@ import java.util.stream.Collectors;
 
 @DgsComponent
 public class ArtworkUploadDataFetcher {
-    @DgsData(parentType = DgsConstants.MUTATION.TYPE_NAME, field = DgsConstants.MUTATION.AddArtwork)
-    public List<Image> uploadArtwork(@InputArgument("showId") Integer showId, @InputArgument("upload") MultipartFile multipartFile) throws IOException {
+    @DgsMutation
+    public List<Image> addArtwork(@InputArgument Integer showId, @InputArgument MultipartFile upload) throws IOException {
         Path uploadDir = Paths.get("uploaded-images");
-        if(!Files.exists(uploadDir)) {
-                Files.createDirectories(uploadDir);
+        if (!Files.exists(uploadDir)) {
+            Files.createDirectories(uploadDir);
         }
 
-        Path newFile = uploadDir.resolve("show-" + showId + "-" + UUID.randomUUID() + multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf(".")));
-        try(OutputStream outputStream = Files.newOutputStream(newFile)) {
-            outputStream.write(multipartFile.getBytes());
+        Path newFile = uploadDir.resolve("show-" + showId + "-" + UUID.randomUUID() + upload.getOriginalFilename().substring(upload.getOriginalFilename().lastIndexOf(".")));
+        try (OutputStream outputStream = Files.newOutputStream(newFile)) {
+            outputStream.write(upload.getBytes());
         }
 
         return Files.list(uploadDir)

@@ -15,6 +15,7 @@ import com.netflix.graphql.dgs.DgsQueryExecutor;
 import com.netflix.graphql.dgs.autoconfig.DgsAutoConfiguration;
 import com.netflix.graphql.dgs.client.codegen.GraphQLQueryRequest;
 import graphql.ExecutionResult;
+import org.assertj.core.util.Maps;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -23,6 +24,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.OffsetDateTime;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -44,10 +47,11 @@ class ShowsDatafetcherTest {
 
     @BeforeEach
     public void before() {
-        Mockito.when(showsService.shows()).thenAnswer(invocation -> List.of(Show.newBuilder().id(1).title("mock title").releaseYear(2020).build()));
-        Mockito.when(reviewsService.reviewsForShows(List.of(1)))
+        Mockito.when(showsService.shows())
+                .thenAnswer(invocation -> Collections.singletonList(Show.newBuilder().id(1).title("mock title").releaseYear(2020).build()));
+        Mockito.when(reviewsService.reviewsForShows(Collections.singletonList(1)))
                 .thenAnswer(invocation ->
-                        Map.of(1, List.of(
+                        Maps.newHashMap(1, Arrays.asList(
                                 Review.newBuilder().username("DGS User").starScore(5).submittedDate(OffsetDateTime.now()).build(),
                                 Review.newBuilder().username("DGS User 2").starScore(3).submittedDate(OffsetDateTime.now()).build())
                         ));
@@ -119,7 +123,7 @@ class ShowsDatafetcherTest {
 
     @Test
     void addReviewsMutation() {
-        List<SubmittedReview> reviews = List.of(
+        List<SubmittedReview> reviews = Collections.singletonList(
                 SubmittedReview.newBuilder().showId(1).username("testuser1").starScore(5).build());
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
                 AddReviewsGraphQLQuery.newRequest()
@@ -130,6 +134,6 @@ class ShowsDatafetcherTest {
         ExecutionResult executionResult = dgsQueryExecutor.execute(graphQLQueryRequest.serialize());
         assertThat(executionResult.getErrors()).isEmpty();
 
-        verify(reviewsService).reviewsForShows(List.of(1));
+        verify(reviewsService).reviewsForShows(Collections.singletonList(1));
     }
 }

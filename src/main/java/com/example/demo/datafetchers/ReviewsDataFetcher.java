@@ -6,17 +6,18 @@ import com.example.demo.generated.types.Review;
 import com.example.demo.generated.types.Show;
 import com.example.demo.generated.types.SubmittedReview;
 import com.example.demo.services.DefaultReviewsService;
-import com.netflix.graphql.dgs.DgsComponent;
-import com.netflix.graphql.dgs.DgsData;
-import com.netflix.graphql.dgs.DgsDataFetchingEnvironment;
-import com.netflix.graphql.dgs.InputArgument;
+import com.netflix.graphql.dgs.*;
 import org.dataloader.DataLoader;
 import org.reactivestreams.Publisher;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -49,27 +50,27 @@ public class ReviewsDataFetcher {
         return reviewsDataLoader.load(show.getId());
     }
 
-    @DgsData(parentType = DgsConstants.MUTATION.TYPE_NAME, field = DgsConstants.MUTATION.AddReview)
-    public List<Review> addReview(@InputArgument("review")SubmittedReview reviewInput) {
-        reviewsService.saveReview(reviewInput);
+    @DgsMutation
+    public List<Review> addReview(@InputArgument SubmittedReview review) {
+        reviewsService.saveReview(review);
 
-        List<Review> reviews = reviewsService.reviewsForShow(reviewInput.getShowId());
+        List<Review> reviews = reviewsService.reviewsForShow(review.getShowId());
 
-        return Objects.requireNonNullElseGet(reviews, List::of);
+        return Optional.ofNullable(reviews).orElse(Collections.emptyList());
     }
 
-    @DgsData(parentType = DgsConstants.MUTATION.TYPE_NAME, field = DgsConstants.MUTATION.AddReviews)
-    public List<Review> addReviews(@InputArgument(value = "reviews", collectionType=SubmittedReview.class) List<SubmittedReview> reviewsInput) {
+    @DgsMutation
+    public List<Review> addReviews(@InputArgument(value = "reviews", collectionType = SubmittedReview.class) List<SubmittedReview> reviewsInput) {
         reviewsService.saveReviews(reviewsInput);
 
-        List<Integer> showIds = reviewsInput.stream().map( review -> review.getShowId() ).collect(Collectors.toList());
+        List<Integer> showIds = reviewsInput.stream().map(SubmittedReview::getShowId).collect(Collectors.toList());
         Map<Integer, List<Review>> reviews = reviewsService.reviewsForShows(showIds);
 
-        return new ArrayList(reviews.values());
+        return reviews.values().stream().flatMap(List::stream).collect(Collectors.toList());
     }
 
-    @DgsData(parentType = DgsConstants.SUBSCRIPTION_TYPE, field = DgsConstants.SUBSCRIPTION.ReviewAdded)
-    public Publisher<Review> reviewAddedSubscription(@InputArgument("showId") Integer showId) {
+    @DgsSubscription
+    public Publisher<Review> reviewAdded(@InputArgument Integer showId) {
         return reviewsService.getReviewsPublisher();
     }
 }
