@@ -1,12 +1,14 @@
 package com.example.demo.datafetchers;
 
 import com.example.demo.dataloaders.ReviewsDataLoader;
+import com.example.demo.dataloaders.ReviewsDataLoaderWithContext;
 import com.example.demo.generated.DgsConstants;
 import com.example.demo.generated.types.Review;
 import com.example.demo.generated.types.Show;
 import com.example.demo.generated.types.SubmittedReview;
 import com.example.demo.services.DefaultReviewsService;
 import com.netflix.graphql.dgs.*;
+import org.dataloader.BatchLoaderEnvironment;
 import org.dataloader.DataLoader;
 import org.reactivestreams.Publisher;
 
@@ -41,7 +43,7 @@ public class ReviewsDataFetcher {
     @DgsData(parentType = DgsConstants.SHOW.TYPE_NAME, field = DgsConstants.SHOW.Reviews)
     public CompletableFuture<List<Review>> reviews(DgsDataFetchingEnvironment dfe) {
         //Instead of loading a DataLoader by name, we can use the DgsDataFetchingEnvironment and pass in the DataLoader classname.
-        DataLoader<Integer, List<Review>> reviewsDataLoader = dfe.getDataLoader(ReviewsDataLoader.class);
+        DataLoader<Integer, List<Review>> reviewsDataLoader = dfe.getDataLoader(ReviewsDataLoaderWithContext.class);
 
         //Because the reviews field is on Show, the getSource() method will return the Show instance.
         Show show = dfe.getSource();
