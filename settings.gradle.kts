@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-rootProject.name = "demo"
+rootProject.name = "dgs-examples-java"
