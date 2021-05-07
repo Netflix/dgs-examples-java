@@ -3,6 +3,7 @@ package com.example.demo;
 import com.example.demo.datafetchers.ReviewsDataFetcher;
 import com.example.demo.datafetchers.ShowsDatafetcher;
 import com.example.demo.dataloaders.ReviewsDataLoader;
+import com.example.demo.dataloaders.ReviewsDataLoaderWithContext;
 import com.example.demo.generated.client.*;
 import com.example.demo.generated.types.Review;
 import com.example.demo.generated.types.Show;
@@ -33,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 
 
-@SpringBootTest(classes = {DgsAutoConfiguration.class, ShowsDatafetcher.class, ReviewsDataFetcher.class, ReviewsDataLoader.class, DateTimeScalar.class})
+@SpringBootTest(classes = {DgsAutoConfiguration.class, ReviewsDataLoaderWithContext.class, ShowsDatafetcher.class, ReviewsDataFetcher.class, ReviewsDataLoader.class, DateTimeScalar.class})
 class ShowsDatafetcherTest {
 
     @Autowired

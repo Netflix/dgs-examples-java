@@ -25,6 +25,12 @@ group = "com.example"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
+// If you use Spring Boot Gradle Plugin 2.3.+ you will have to explicitly set the Kotlin Version to 1.4.+.
+// The plugin will downgrade Kotlin to its 1.3.x version, which is not compatible.
+// You do this by setting the version into the `extra["kotlin.version"]` e.g:
+//
+// extra["kotlin.version"] = "1.4.31"
+
 repositories {
     mavenCentral()
     mavenLocal()
