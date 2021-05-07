@@ -16,47 +16,49 @@
 
 
 plugins {
-	id("java")
-	id("org.springframework.boot") version "2.3.9.RELEASE"
-	id("io.spring.dependency-management") version "1.0.11.RELEASE"
-	id("com.netflix.dgs.codegen") version "4.4.3"
+    id("java")
+    id("com.netflix.dgs.codegen") version "4.6.4"
+    id("org.springframework.boot") version "2.4.5"
 }
 
 group = "com.example"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
-// Explicitly set a Kotlin Version since the org.springframework.boot Gradle Plugin 2.3.9.RELEASE
-// will roll it back to 1.3.x.
-extra["kotlin.version"] = "1.4.31"
+// If you use org.springframework.boot 2.3.+ you will have to explicitly set
+// the Kotlin Version to 1.4.+. The plugin will downgrade Kotlin to its 1.3.x version, which is not compatible.
+// You do this via the extra["kotlin.version"] e.g:
+//
+// extra["kotlin.version"] = "1.4.31"
 
 repositories {
-	mavenCentral()
+    mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
-	implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:3.10.2"))
-	implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter")
-	implementation("com.graphql-java:graphql-java-extended-scalars:1.0.+")
-	implementation("com.github.javafaker:javafaker:1.+")
+    implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:latest.release"))
+    implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter")
+    implementation("com.netflix.graphql.dgs:graphql-dgs-extended-scalars")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("com.github.javafaker:javafaker:1.+")
 
-	implementation("org.springframework.boot:spring-boot-starter-web")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 tasks.withType<com.netflix.graphql.dgs.codegen.gradle.GenerateJavaTask> {
-	generateClient = true
-	packageName = "com.example.demo.generated"
+    generateClient = true
+    packageName = "com.example.demo.generated"
 }
 
 tasks.withType<JavaCompile> {
-	java {
-		targetCompatibility = JavaVersion.VERSION_1_8
-		sourceCompatibility = JavaVersion.VERSION_1_8
-	}
+    java {
+        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+    }
 }
 
 tasks.withType<Test> {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
