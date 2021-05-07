@@ -26,6 +26,10 @@ group = "com.example"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
+// Explicitly set a Kotlin Version since the org.springframework.boot Gradle Plugin 2.3.9.RELEASE
+// will roll it back to 1.3.x.
+extra["kotlin.version"] = "1.4.31"
+
 repositories {
 	mavenCentral()
 }
