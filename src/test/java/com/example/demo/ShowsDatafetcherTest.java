@@ -8,6 +8,7 @@ import com.example.demo.generated.client.*;
 import com.example.demo.generated.types.Review;
 import com.example.demo.generated.types.Show;
 import com.example.demo.generated.types.SubmittedReview;
+import com.example.demo.scalars.DateRangeScalar;
 import com.example.demo.scalars.DateTimeScalar;
 import com.example.demo.services.DefaultReviewsService;
 import com.example.demo.services.ShowsService;
@@ -28,13 +29,12 @@ import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 
 
-@SpringBootTest(classes = {DgsAutoConfiguration.class, ReviewsDataLoaderWithContext.class, ShowsDatafetcher.class, ReviewsDataFetcher.class, ReviewsDataLoader.class, DateTimeScalar.class})
+@SpringBootTest(classes = {DgsAutoConfiguration.class, ReviewsDataLoaderWithContext.class, ShowsDatafetcher.class, ReviewsDataFetcher.class, ReviewsDataLoader.class, DateTimeScalar.class, DateRangeScalar.class})
 class ShowsDatafetcherTest {
 
     @Autowired

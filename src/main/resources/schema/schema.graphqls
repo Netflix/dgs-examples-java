@@ -1,5 +1,6 @@
 type Query {
     shows(titleFilter: String): [Show]
+    reviews(dateRange: DateRange): [Review]
 }
 
 type Mutation {
@@ -19,6 +20,8 @@ type Show {
     reviews(minScore:Int): [Review]
     artwork: [Image]
 }
+
+scalar DateRange
 
 type Review {
     username: String

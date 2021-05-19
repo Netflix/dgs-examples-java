@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import com.example.demo.generated.types.Review;
 import com.example.demo.generated.types.SubmittedReview;
+import com.example.demo.scalars.DateRange;
 import com.github.javafaker.Faker;
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
@@ -12,11 +13,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.FluxSink;
 
 import javax.annotation.PostConstruct;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
+import java.time.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -68,6 +67,7 @@ public class DefaultReviewsService implements ReviewsService {
     /**
      * Hopefully nobody calls this for multiple shows within a single query, that would indicate the N+1 problem!
      */
+    @Override
     public List<Review> reviewsForShow(Integer showId) {
         return reviews.get(showId);
     }
@@ -76,6 +76,7 @@ public class DefaultReviewsService implements ReviewsService {
      * This is the method we want to call when loading reviews for multiple shows.
      * If this code was backed by a relational database, it would select reviews for all requested shows in a single SQL query.
      */
+    @Override
     public Map<Integer, List<Review>> reviewsForShows(List<Integer> showIds) {
         logger.info("Loading reviews for shows {}", showIds.stream().map(String::valueOf).collect(Collectors.joining(", ")));
 
@@ -85,6 +86,7 @@ public class DefaultReviewsService implements ReviewsService {
                 .filter(entry -> showIds.contains(entry.getKey())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
+    @Override
     public void saveReview(SubmittedReview reviewInput) {
         List<Review> reviewsForShow = reviews.computeIfAbsent(reviewInput.getShowId(), (key) -> new ArrayList<>());
         Review review = Review.newBuilder()
@@ -98,6 +100,7 @@ public class DefaultReviewsService implements ReviewsService {
         logger.info("Review added {}", review);
     }
 
+    @Override
     public void saveReviews(List<SubmittedReview> reviewsInput) {
         reviewsInput.forEach(reviewInput -> {
             List<Review> reviewsForShow = reviews.computeIfAbsent(reviewInput.getShowId(), (key) -> new ArrayList<>());
@@ -113,7 +116,16 @@ public class DefaultReviewsService implements ReviewsService {
         });
     }
 
+    @Override
     public Publisher<Review> getReviewsPublisher() {
         return reviewsPublisher;
+    }
+
+    @Override
+    public List<Review> listReviews(DateRange dateRange) {
+        return reviews.values().stream().flatMap(Collection::stream)
+                .filter(r -> r.getSubmittedDate().isAfter(OffsetDateTime.of(dateRange.getFrom(), LocalTime.NOON, ZoneOffset.UTC)))
+                .filter(r -> r.getSubmittedDate().isBefore(OffsetDateTime.of(dateRange.getTo(), LocalTime.NOON, ZoneOffset.UTC)))
+                .collect(Collectors.toList());
     }
 }

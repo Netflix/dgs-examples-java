@@ -1,24 +1,20 @@
 package com.example.demo.datafetchers;
 
-import com.example.demo.dataloaders.ReviewsDataLoader;
 import com.example.demo.dataloaders.ReviewsDataLoaderWithContext;
 import com.example.demo.generated.DgsConstants;
 import com.example.demo.generated.types.Review;
 import com.example.demo.generated.types.Show;
 import com.example.demo.generated.types.SubmittedReview;
+import com.example.demo.scalars.DateRange;
 import com.example.demo.services.DefaultReviewsService;
+import com.example.demo.services.ReviewsService;
 import com.netflix.graphql.dgs.*;
-import org.dataloader.BatchLoaderEnvironment;
 import org.dataloader.DataLoader;
 import org.reactivestreams.Publisher;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -27,7 +23,7 @@ import java.util.stream.Collectors;
 @DgsComponent
 public class ReviewsDataFetcher {
 
-    private final DefaultReviewsService reviewsService;
+    private final ReviewsService reviewsService;
 
     public ReviewsDataFetcher(DefaultReviewsService reviewsService) {
         this.reviewsService = reviewsService;
@@ -41,7 +37,10 @@ public class ReviewsDataFetcher {
      * For this to work correctly, the datafetcher needs to return a CompletableFuture.
      */
     @DgsData(parentType = DgsConstants.SHOW.TYPE_NAME, field = DgsConstants.SHOW.Reviews)
-    public CompletableFuture<List<Review>> reviews(DgsDataFetchingEnvironment dfe) {
+    public CompletableFuture<List<Review>> reviews(DgsDataFetchingEnvironment dfe, @InputArgument DateRange dateRange) {
+
+        System.out.println(dateRange);
+
         //Instead of loading a DataLoader by name, we can use the DgsDataFetchingEnvironment and pass in the DataLoader classname.
         DataLoader<Integer, List<Review>> reviewsDataLoader = dfe.getDataLoader(ReviewsDataLoaderWithContext.class);
 
@@ -50,6 +49,11 @@ public class ReviewsDataFetcher {
 
         //Load the reviews from the DataLoader. This call is async and will be batched by the DataLoader mechanism.
         return reviewsDataLoader.load(show.getId());
+    }
+
+    @DgsQuery
+    public List<Review> reviews(@InputArgument DateRange dateRange) {
+        return reviewsService.listReviews(dateRange);
     }
 
     @DgsMutation

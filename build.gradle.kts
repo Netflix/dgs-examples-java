@@ -33,11 +33,14 @@ java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
     mavenCentral()
+    maven {
+        url = uri("https://netflixoss.jfrog.io/artifactory/maven-oss-candidates/")
+    }
     mavenLocal()
 }
 
 dependencies {
-    implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:latest.release"))
+    implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:4.0.0-rc.2"))
     implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter")
     implementation("com.netflix.graphql.dgs:graphql-dgs-extended-scalars")
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -49,6 +52,7 @@ dependencies {
 tasks.withType<com.netflix.graphql.dgs.codegen.gradle.GenerateJavaTask> {
     generateClient = true
     packageName = "com.example.demo.generated"
+    typeMapping = mutableMapOf("DateRange" to "com.example.demo.scalars.DateRange")
 }
 
 tasks.withType<JavaCompile> {
