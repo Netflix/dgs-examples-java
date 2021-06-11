@@ -37,6 +37,7 @@ type Image {
     url: String
 }
 
+scalar PageInfo
 scalar DateTime
 scalar Upload
 directive @skipcodegen on FIELD_DEFINITION
