@@ -9,6 +9,7 @@ import com.example.demo.generated.types.Review;
 import com.example.demo.generated.types.Show;
 import com.example.demo.generated.types.SubmittedReview;
 import com.example.demo.scalars.DateTimeScalar;
+import com.example.demo.scalars.PageInfoScalar;
 import com.example.demo.services.DefaultReviewsService;
 import com.example.demo.services.ShowsService;
 import com.jayway.jsonpath.TypeRef;
@@ -34,7 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 
 
-@SpringBootTest(classes = {DgsAutoConfiguration.class, ReviewsDataLoaderWithContext.class, ShowsDatafetcher.class, ReviewsDataFetcher.class, ReviewsDataLoader.class, DateTimeScalar.class})
+@SpringBootTest(classes = {DgsAutoConfiguration.class, ReviewsDataLoaderWithContext.class, ShowsDatafetcher.class, ReviewsDataFetcher.class, ReviewsDataLoader.class, DateTimeScalar.class, PageInfoScalar.class})
 class ShowsDatafetcherTest {
 
     @Autowired

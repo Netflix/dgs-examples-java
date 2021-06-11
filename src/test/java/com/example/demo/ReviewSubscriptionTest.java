@@ -6,6 +6,7 @@ import com.example.demo.generated.client.AddReviewProjectionRoot;
 import com.example.demo.generated.types.Review;
 import com.example.demo.generated.types.SubmittedReview;
 import com.example.demo.scalars.DateTimeScalar;
+import com.example.demo.scalars.PageInfoScalar;
 import com.example.demo.services.DefaultReviewsService;
 import com.example.demo.services.ShowsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,7 +34,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
  * Each time a review is added, a new ExecutionResult is given to subscriber.
  * Normally, this publisher is consumed by the Websocket/SSE subscription handler and you don't deal with this code directly, but for testing purposes it's useful to use the stream directly.
  */
-@SpringBootTest(classes = {DefaultReviewsService.class, ReviewsDataFetcher.class, DgsAutoConfiguration.class, DateTimeScalar.class})
+@SpringBootTest(classes = {DefaultReviewsService.class, ReviewsDataFetcher.class, DgsAutoConfiguration.class, DateTimeScalar.class, PageInfoScalar.class})
 public class ReviewSubscriptionTest {
     @Autowired
     DgsQueryExecutor dgsQueryExecutor;
