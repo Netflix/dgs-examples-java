@@ -18,6 +18,7 @@ type Show {
     releaseYear: Int
     reviews(minScore:Int): [Review]
     artwork: [Image]
+    pageinfo: PageInfo!
 }
 
 type Review {
@@ -34,7 +35,6 @@ input SubmittedReview {
 
 type Image {
     url: String
-    boh: JSON
 }
 
 scalar DateTime
