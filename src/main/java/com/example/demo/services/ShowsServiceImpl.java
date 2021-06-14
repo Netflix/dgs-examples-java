@@ -14,6 +14,7 @@ public class ShowsServiceImpl implements ShowsService {
 
     @Override
     public List<Show> shows() {
+        // For test purposes It is not the right way to handle it
         PageInfo pageinfo = new DefaultPageInfo(new DefaultConnectionCursor("test"), new DefaultConnectionCursor("test"), true, true);
         return Arrays.asList(
                 Show.newBuilder().id(1).title("Stranger Things").releaseYear(2016).pageinfo(pageinfo).build(),
