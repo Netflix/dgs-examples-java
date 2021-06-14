@@ -8,9 +8,6 @@ import graphql.schema.idl.RuntimeWiring;
 /**
  * graphql-java provides optional scalars in the graphql-java-extended-scalars library.
  * We can wire a scalar from this library by adding the scalar to the RuntimeWiring.
- * Please consider {@link <a href="https://github.com/Netflix/dgs-framework/pull/242">
- * https://github.com/Netflix/dgs-framework/pull/242</a>} where the scalars are automatically
- * registered and you might not need to do this unless you have a custom scalar.
  */
 @DgsComponent
 public class DateTimeScalar {

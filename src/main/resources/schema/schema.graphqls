@@ -46,4 +46,3 @@ type PageInfo {
 
 scalar DateTime
 scalar Upload
-directive @skipcodegen on FIELD_DEFINITION
