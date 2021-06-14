@@ -1,11 +1,9 @@
 package com.example.demo.services;
 
 import com.example.demo.generated.types.Show;
-import com.example.demo.scalars.PageInfoScalar;
 import graphql.relay.DefaultConnectionCursor;
 import graphql.relay.DefaultPageInfo;
 import graphql.relay.PageInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -13,16 +11,10 @@ import java.util.List;
 
 @Service
 public class ShowsServiceImpl implements ShowsService {
-    final
-    PageInfoScalar pageInfoScalar;
-
-    public ShowsServiceImpl(PageInfoScalar pageInfoScalar) {
-        this.pageInfoScalar = pageInfoScalar;
-    }
 
     @Override
     public List<Show> shows() {
-        PageInfo pageinfo = pageInfoScalar.serialize(new DefaultPageInfo(new DefaultConnectionCursor("test"), new DefaultConnectionCursor("test"), true, true));
+        PageInfo pageinfo = new DefaultPageInfo(new DefaultConnectionCursor("test"), new DefaultConnectionCursor("test"), true, true);
         return Arrays.asList(
                 Show.newBuilder().id(1).title("Stranger Things").releaseYear(2016).pageinfo(pageinfo).build(),
                 Show.newBuilder().id(2).title("Ozark").releaseYear(2017).pageinfo(pageinfo).build(),

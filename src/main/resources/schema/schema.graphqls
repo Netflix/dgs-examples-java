@@ -37,7 +37,13 @@ type Image {
     url: String
 }
 
-scalar PageInfo
+type PageInfo {
+    hasNextPage: Boolean!
+    hasPreviousPage: Boolean!
+    startCursor: String
+    endCursor: String
+}
+
 scalar DateTime
 scalar Upload
 directive @skipcodegen on FIELD_DEFINITION
