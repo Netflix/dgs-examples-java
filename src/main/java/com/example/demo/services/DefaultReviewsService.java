@@ -50,7 +50,12 @@ public class DefaultReviewsService implements ReviewsService {
         showsService.shows().forEach(show -> {
             List<Review> generatedReviews = IntStream.range(0, faker.number().numberBetween(1, 20)).mapToObj(number -> {
                 LocalDateTime date = faker.date().past(300, TimeUnit.DAYS).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-                return Review.newBuilder().submittedDate(OffsetDateTime.of(date, ZoneOffset.UTC)).username(faker.name().username()).starScore(faker.number().numberBetween(0, 6)).build();
+                return Review.newBuilder()
+                        .submittedDate(OffsetDateTime.of(date, ZoneOffset.UTC))
+                        .username(faker.name().username())
+                        .starScore(faker.number().numberBetween(0, 6))
+                        .showId(show.getId())
+                        .build();
             }).collect(Collectors.toList());
 
             reviews.put(show.getId(), generatedReviews);
@@ -88,6 +93,7 @@ public class DefaultReviewsService implements ReviewsService {
     public void saveReview(SubmittedReview reviewInput) {
         List<Review> reviewsForShow = reviews.computeIfAbsent(reviewInput.getShowId(), (key) -> new ArrayList<>());
         Review review = Review.newBuilder()
+                .showId(reviewInput.getShowId())
                 .username(reviewInput.getUsername())
                 .starScore(reviewInput.getStarScore())
                 .submittedDate(OffsetDateTime.now()).build();
@@ -95,13 +101,14 @@ public class DefaultReviewsService implements ReviewsService {
         reviewsForShow.add(review);
         reviewsStream.next(review);
 
-        logger.info("Review added {}", review);
+        logger.info("Review added A {}", review);
     }
 
     public void saveReviews(List<SubmittedReview> reviewsInput) {
         reviewsInput.forEach(reviewInput -> {
             List<Review> reviewsForShow = reviews.computeIfAbsent(reviewInput.getShowId(), (key) -> new ArrayList<>());
             Review review = Review.newBuilder()
+                    .showId(reviewInput.getShowId())
                     .username(reviewInput.getUsername())
                     .starScore(reviewInput.getStarScore())
                     .submittedDate(OffsetDateTime.now()).build();
@@ -109,11 +116,22 @@ public class DefaultReviewsService implements ReviewsService {
             reviewsForShow.add(review);
             reviewsStream.next(review);
 
-            logger.info("Review added {}", review);
+            logger.info("Review added B {}", review);
         });
     }
 
-    public Publisher<Review> getReviewsPublisher() {
-        return reviewsPublisher;
+    public Publisher<Review> getReviewsPublisher(Integer showId) {
+        logger.info("-----------------------------------------------");
+        logger.info("getReviewsPublisher() is called. showId: {}", showId);
+        logger.info("-----------------------------------------------");
+        
+        ConnectableFlux<Review> connectableFlux = reviewsPublisher.filter(e -> {
+            logger.info("e.getShowId(): {}", e.getShowId());
+            return e.getShowId().equals(showId);
+        }).replay();
+        
+        // connectableFlux.publish();
+        connectableFlux.connect();
+        return connectableFlux;
     }
 }

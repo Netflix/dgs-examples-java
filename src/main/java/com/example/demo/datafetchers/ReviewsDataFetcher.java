@@ -73,6 +73,6 @@ public class ReviewsDataFetcher {
 
     @DgsSubscription
     public Publisher<Review> reviewAdded(@InputArgument Integer showId) {
-        return reviewsService.getReviewsPublisher();
+        return reviewsService.getReviewsPublisher(showId);
     }
 }

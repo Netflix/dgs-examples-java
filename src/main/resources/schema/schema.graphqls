@@ -21,6 +21,7 @@ type Show {
 }
 
 type Review {
+    showId: Int
     username: String
     starScore: Int
     submittedDate: DateTime

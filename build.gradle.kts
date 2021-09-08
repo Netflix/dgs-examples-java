@@ -42,6 +42,7 @@ dependencies {
     implementation("com.netflix.graphql.dgs:graphql-dgs-extended-scalars")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.github.javafaker:javafaker:1.+")
+    implementation("com.netflix.graphql.dgs:graphql-dgs-subscriptions-websockets-autoconfigure:latest.release")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
@@ -61,4 +62,3 @@ tasks.withType<JavaCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
-
