@@ -10,4 +10,23 @@ public class DemoApplication {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
+	/**
+	 * Below is an example of using a PreparsedDocumentProvider.
+	 * Uncomment to enable
+	 */
+//	@Configuration
+//	static class PreparsedDocumentProviderConfig {
+//
+//		private final Cache<String, PreparsedDocumentEntry> cache = Caffeine.newBuilder().maximumSize(250)
+//				.expireAfterAccess(5, TimeUnit.MINUTES).recordStats().build();
+//
+//
+//		@Bean
+//		public PreparsedDocumentProvider preparsedDocumentProvider() {
+//			return (executionInput, parseAndValidateFunction) -> {
+//				Function<String, PreparsedDocumentEntry> mapCompute = key -> parseAndValidateFunction.apply(executionInput);
+//				return cache.get(executionInput.getQuery(), mapCompute);
+//			};
+//		}
+//	}
 }

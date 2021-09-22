@@ -33,15 +33,16 @@ java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
     mavenCentral()
-    mavenLocal()
+//    maven(url = "https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates")
 }
 
 dependencies {
-    implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:latest.release"))
+    implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:4.8.1"))
     implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter")
     implementation("com.netflix.graphql.dgs:graphql-dgs-extended-scalars")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.github.javafaker:javafaker:1.+")
+    implementation("com.github.ben-manes.caffeine:caffeine")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
