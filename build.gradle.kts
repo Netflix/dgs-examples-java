@@ -33,7 +33,11 @@ java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
     mavenCentral()
-//    maven(url = "https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates")
+    // ----
+    // Before we release the DGS Framework our CI Pipeline tests this project against the current snapshot.
+    // To support that we need to have `mavenLocal` support.
+    mavenLocal()
+    // ----
 }
 
 dependencies {
