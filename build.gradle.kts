@@ -17,8 +17,9 @@
 
 plugins {
     id("java")
+    id("org.springframework.boot") version "2.5.4"
+    id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("com.netflix.dgs.codegen") version "5.1.0"
-    id("org.springframework.boot") version "2.4.10"
 }
 
 group = "com.example"
@@ -44,11 +45,15 @@ dependencies {
     implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:4.8.1"))
     implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter")
     implementation("com.netflix.graphql.dgs:graphql-dgs-extended-scalars")
+    implementation("com.netflix.graphql.dgs:graphql-dgs-subscriptions-websockets-autoconfigure")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.github.javafaker:javafaker:1.+")
     implementation("com.github.ben-manes.caffeine:caffeine")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("com.netflix.graphql.dgs:graphql-dgs-client")
+    testImplementation("org.springframework.boot:spring-boot-starter-webflux")
+    testImplementation("io.projectreactor:reactor-test")
 }
 
 tasks.withType<com.netflix.graphql.dgs.codegen.gradle.GenerateJavaTask> {
