@@ -5,7 +5,8 @@ import com.example.demo.generated.client.AddReviewProjectionRoot;
 import com.example.demo.generated.client.ReviewAddedGraphQLQuery;
 import com.example.demo.generated.client.ReviewAddedProjectionRoot;
 import com.example.demo.generated.types.SubmittedReview;
-import com.netflix.graphql.dgs.client.*;
+import com.netflix.graphql.dgs.client.MonoGraphQLClient;
+import com.netflix.graphql.dgs.client.WebSocketGraphQLClient;
 import com.netflix.graphql.dgs.client.codegen.GraphQLQueryRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,17 +28,11 @@ public class ReviewSubscriptionIntegrationTest {
 
     private WebSocketGraphQLClient webSocketGraphQLClient;
     private MonoGraphQLClient graphQLClient;
-    private MonoRequestExecutor requestExecutor = (url, headers, body) -> WebClient.create(url)
-            .post()
-            .bodyValue(body)
-            .headers(consumer -> headers.forEach(consumer::addAll))
-            .exchangeToMono(r -> r.bodyToMono(String.class).map(responseBody -> new HttpResponse(r.rawStatusCode(), responseBody, r.headers().asHttpHeaders())));
-
 
     @BeforeEach
     public void setup() {
         webSocketGraphQLClient = new WebSocketGraphQLClient("ws://localhost:" + port + "/subscriptions", new ReactorNettyWebSocketClient());
-        graphQLClient = new DefaultGraphQLClient("http://localhost:" + port + "/graphql");
+        graphQLClient = MonoGraphQLClient.createWithWebClient(WebClient.create(("http://localhost:" + port + "/graphql")));
     }
 
     @Test
@@ -62,11 +57,11 @@ public class ReviewSubscriptionIntegrationTest {
         StepVerifier.create(starScore)
                 .thenAwait(Duration.ofSeconds(1))
                 .then(() -> {
-                    graphQLClient.reactiveExecuteQuery(addReviewMutation1.serialize(), Collections.emptyMap(), requestExecutor).block();
+                    graphQLClient.reactiveExecuteQuery(addReviewMutation1.serialize(), Collections.emptyMap()).block();
 
                 })
                 .then(() ->
-                        graphQLClient.reactiveExecuteQuery(addReviewMutation2.serialize(), Collections.emptyMap(), requestExecutor).block())
+                        graphQLClient.reactiveExecuteQuery(addReviewMutation2.serialize(), Collections.emptyMap()).block())
                 .expectNext(5)
                 .expectNext(3)
                 .thenCancel()
