@@ -14,7 +14,7 @@ type Subscription {
 
 type Show {
     id: Int
-    title: String
+    title: String @uppercase
     releaseYear: Int
     reviews(minScore:Int): [Review]
     artwork: [Image]
@@ -39,3 +39,4 @@ type Image {
 scalar DateTime
 scalar Upload
 directive @skipcodegen on FIELD_DEFINITION
+directive @uppercase on FIELD_DEFINITION
