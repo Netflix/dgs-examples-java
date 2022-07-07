@@ -1,5 +1,8 @@
 type Query {
     shows(titleFilter: String): [Show]
+    secureNone: String
+    secureUser: String
+    secureAdmin: String
 }
 
 type Mutation {
