@@ -2,7 +2,7 @@ package com.example.demo.services;
 
 import com.example.demo.generated.types.Review;
 import com.example.demo.generated.types.SubmittedReview;
-import com.github.javafaker.Faker;
+import net.datafaker.Faker;
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
