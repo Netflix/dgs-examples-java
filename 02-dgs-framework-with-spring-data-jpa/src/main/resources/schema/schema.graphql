@@ -1,0 +1,52 @@
+type Query {
+    agencies(ids: [Int]): [Agency]
+    agents(ids: [String]): [Agent]
+    properties(ids: [Int]): [Property]
+}
+
+type Mutation {
+    createProperties(properties: [PropertyInput]): [Property]
+    updateProperties(properties: [PropertyInput]): [Property]
+    deleteProperties(ids: [Int]) : [Int]
+}
+
+type Agency {
+    id: Int!
+    name: String!
+    taxCode: String!
+    agents: [Agent]!
+    properties: [Property]!
+}
+
+type Agent {
+    id: String! #UUID
+    fullName: String!
+    agency: Agency!
+}
+
+type Property {
+    id: Int!
+    name: String!
+    type: PropertyType
+    latitude: String
+    longitude: String
+    purchaseDate: String
+    agency: Agency!
+}
+
+input PropertyInput {
+    id: Int
+    name: String
+    type: PropertyType
+    latitude: String
+    longitude: String
+    purchaseDate: String
+    agencyId: Int
+}
+
+enum PropertyType {
+    WOODED_LAND,
+    AGRICULTURAL_LAND,
+    BUILDING_LAND
+}
+
