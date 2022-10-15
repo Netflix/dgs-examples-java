@@ -1,4 +1,4 @@
-Java DGS Framework example
+Java DGS Framework example (basic features)
 =====
 
 This repository is an example application for the [DGS Framework](https://netflix.github.io/dgs).
