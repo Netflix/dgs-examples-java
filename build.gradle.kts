@@ -19,8 +19,8 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
 plugins {
     id("java")
-    id("org.springframework.boot") version "2.6.2"
-    id("io.spring.dependency-management") version "1.0.12.RELEASE"
+    id("org.springframework.boot") version "2.7.2"
+    id("io.spring.dependency-management") version "1.0.14.RELEASE"
     id("com.netflix.dgs.codegen") version "5.6.0"
 }
 
@@ -31,8 +31,8 @@ java.sourceCompatibility = JavaVersion.VERSION_1_8
 // If you use Spring Boot Gradle Plugin 2.3.+ you will have to explicitly set the Kotlin Version to 1.4.+.
 // The plugin will downgrade Kotlin to its 1.3.x version, which is not compatible.
 // You do this by setting the version into the `extra["kotlin.version"]` e.g:
-//
-// extra["kotlin.version"] = "1.4.31"
+
+// extra["graphql-java.version"] = "19.2"
 
 repositories {
     mavenCentral()
@@ -43,21 +43,31 @@ repositories {
     // ----
 }
 
+dependencyManagement {
+    imports {
+        // We need to define the DGS BOM as follows such that the
+        // io.spring.dependency-management plugin respects the versions
+        // expressed in the DGS BOM, e.g. graphql-java
+        // Ref:
+        // https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/htmlsingle/#managing-dependencies.dependency-management-plugin.using-in-isolation
+        mavenBom("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:latest.release")
+    }
+}
+
 dependencies {
-    implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:latest.release"))
     implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter")
     implementation("com.netflix.graphql.dgs:graphql-dgs-extended-scalars")
     implementation("com.netflix.graphql.dgs:graphql-dgs-subscriptions-websockets-autoconfigure")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("net.datafaker:datafaker:1.+")
     implementation("com.github.ben-manes.caffeine:caffeine")
-    implementation("org.springframework.boot:spring-boot-starter-security")
 
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("com.netflix.graphql.dgs:graphql-dgs-client")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-starter-webflux")
-    testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.springframework.security:spring-security-test")
+    testImplementation("io.projectreactor:reactor-test")
 }
 
 tasks.withType<com.netflix.graphql.dgs.codegen.gradle.GenerateJavaTask> {
