@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import com.example.demo.generated.types.Review;
 import com.example.demo.generated.types.SubmittedReview;
+import jakarta.annotation.PostConstruct;
 import net.datafaker.Faker;
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
@@ -11,7 +12,6 @@ import reactor.core.publisher.ConnectableFlux;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.FluxSink;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
