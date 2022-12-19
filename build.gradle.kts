@@ -45,6 +45,12 @@ repositories {
     // ----
 }
 
+dependencyManagement {
+	imports {
+		mavenBom("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:latest.release")
+	}
+}
+
 dependencies {
     implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:latest.release"))
     implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter")
@@ -54,8 +60,6 @@ dependencies {
     implementation("net.datafaker:datafaker:1.+")
     implementation("com.github.ben-manes.caffeine:caffeine")
     implementation("org.springframework.boot:spring-boot-starter-security")
-   
-    implementation("com.graphql-java:graphql-java:19.2")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("com.netflix.graphql.dgs:graphql-dgs-client")
