@@ -17,12 +17,14 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.*
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
+
 plugins {
     id("java")
-    id("org.springframework.boot") version "2.6.2"
-    id("io.spring.dependency-management") version "1.0.12.RELEASE"
+    id("org.springframework.boot") version "2.7.3"
+    id("io.spring.dependency-management") version "1.1.0"
     id("com.netflix.dgs.codegen") version "5.6.0"
 }
+apply(plugin = "com.netflix.dgs.codegen")
 
 group = "com.example"
 version = "0.0.1-SNAPSHOT"
@@ -41,6 +43,12 @@ repositories {
     // To support that we need to have `mavenLocal` support.
     mavenLocal()
     // ----
+}
+
+dependencyManagement {
+	imports {
+		mavenBom("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:latest.release")
+	}
 }
 
 dependencies {
