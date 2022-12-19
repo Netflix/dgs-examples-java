@@ -17,12 +17,14 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.*
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
+
 plugins {
     id("java")
     id("org.springframework.boot") version "2.7.3"
     id("io.spring.dependency-management") version "1.1.0"
     id("com.netflix.dgs.codegen") version "5.6.0"
 }
+apply(plugin = "com.netflix.dgs.codegen")
 
 group = "com.example"
 version = "0.0.1-SNAPSHOT"
@@ -52,6 +54,8 @@ dependencies {
     implementation("net.datafaker:datafaker:1.+")
     implementation("com.github.ben-manes.caffeine:caffeine")
     implementation("org.springframework.boot:spring-boot-starter-security")
+   
+    implementation("com.graphql-java:graphql-java:19.2")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("com.netflix.graphql.dgs:graphql-dgs-client")
