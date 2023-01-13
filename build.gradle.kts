@@ -20,7 +20,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
 plugins {
     id("java")
-    id("org.springframework.boot") version "3.0.0"
+    id("org.springframework.boot") version "2.7.7"
     id("io.spring.dependency-management") version "1.1.0"
     id("com.netflix.dgs.codegen") version "5.6.0"
 }
@@ -64,6 +64,26 @@ dependencies {
     implementation("net.datafaker:datafaker:1.+")
     implementation("com.github.ben-manes.caffeine:caffeine")
     implementation("org.springframework.boot:spring-boot-starter-security")
+
+    // ----
+    // Enabling Metrics!
+    //
+    // First, we need to enable Spring Boot's actuators.
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    // Second, enable DGS micrometer metrics integration.
+    implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-micrometer")
+    // Third, choose a Micrometer Registry implementation, in this case we will just use the LoggingMeterRegistry to
+    // demo. We will have to create a LoggingMeterRegistry bean, refer to the MicrometerConfig.java file.
+    // If you want to see the metrics appear in your logs you will have to enable the logger for the
+    // `io.micrometer.core.instrument.logging` package. You can do this by adding the following lines to your
+    // `application.yml` file...
+    // ```
+    // logging:
+    //  level:
+    //      io.micrometer.core.instrument.logging: INFO
+    // ```
+    implementation("io.micrometer:micrometer-core")
+    // ----
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("com.netflix.graphql.dgs:graphql-dgs-client")

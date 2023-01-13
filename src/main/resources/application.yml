@@ -2,6 +2,12 @@ spring:
   application:
     name: dgs-example-java
 
+logging:
+  level:
+    io.micrometer.core.instrument.logging: INFO
+
+debug: true
+
 ---
 spring:
   config:
