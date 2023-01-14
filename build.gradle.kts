@@ -22,7 +22,7 @@ plugins {
     id("java")
     id("org.springframework.boot") version "3.0.0"
     id("io.spring.dependency-management") version "1.1.0"
-    id("com.netflix.dgs.codegen") version "5.6.0"
+    id("com.netflix.dgs.codegen") version "5.6.5"
 }
 apply(plugin = "com.netflix.dgs.codegen")
 
@@ -41,7 +41,7 @@ repositories {
 
 dependencyManagement {
 	imports {
-		mavenBom("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:latest.release")
+		mavenBom("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:5.6.0-SNAPSHOT")
 	}
 }
 
@@ -64,6 +64,9 @@ dependencies {
     implementation("net.datafaker:datafaker:1.+")
     implementation("com.github.ben-manes.caffeine:caffeine")
     implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-micrometer")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("com.netflix.graphql.dgs:graphql-dgs-client")

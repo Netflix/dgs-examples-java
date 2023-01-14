@@ -10,3 +10,7 @@ spring:
   output:
     ansi:
       enabled: always
+
+logging:
+  level:
+    io.micrometer.core.instrument.logging.*: true
