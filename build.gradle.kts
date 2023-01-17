@@ -41,7 +41,7 @@ repositories {
 
 dependencyManagement {
 	imports {
-		mavenBom("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:5.6.0-SNAPSHOT")
+		mavenBom("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:latest.release")
 	}
 }
 
