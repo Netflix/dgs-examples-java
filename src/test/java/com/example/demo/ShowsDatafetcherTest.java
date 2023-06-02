@@ -81,7 +81,7 @@ class ShowsDatafetcherTest {
 
     @Test
     void showsWithQueryApi() {
-        GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(ShowsGraphQLQuery.newRequest().titleFilter("").build(), new ShowsProjectionRoot().title());
+        GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(ShowsGraphQLQuery.newRequest().titleFilter("").build(), new ShowsProjectionRoot<>().title());
         List<String> titles = dgsQueryExecutor.executeAndExtractJsonPath(graphQLQueryRequest.serialize(), "data.shows[*].title");
         assertThat(titles).contains("mock title");
     }
@@ -89,7 +89,7 @@ class ShowsDatafetcherTest {
     @Test
     void showWithReviews() {
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(ShowsGraphQLQuery.newRequest().titleFilter("").build(),
-                new ShowsProjectionRoot()
+                new ShowsProjectionRoot<>()
                         .title()
                         .reviews()
                         .username()
@@ -114,7 +114,7 @@ class ShowsDatafetcherTest {
                                 .username("testuser")
                                 .starScore(5).build())
                         .build(),
-                new AddReviewProjectionRoot().username().starScore());
+                new AddReviewProjectionRoot<>().username().starScore());
 
         ExecutionResult executionResult = dgsQueryExecutor.execute(graphQLQueryRequest.serialize());
         assertThat(executionResult.getErrors()).isEmpty();
@@ -130,7 +130,7 @@ class ShowsDatafetcherTest {
                 AddReviewsGraphQLQuery.newRequest()
                         .reviews(reviews)
                         .build(),
-                new AddReviewsProjectionRoot().username().starScore());
+                new AddReviewsProjectionRoot<>().username().starScore());
 
         ExecutionResult executionResult = dgsQueryExecutor.execute(graphQLQueryRequest.serialize());
         assertThat(executionResult.getErrors()).isEmpty();
