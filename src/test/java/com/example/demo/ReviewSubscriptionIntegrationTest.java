@@ -39,17 +39,17 @@ public class ReviewSubscriptionIntegrationTest {
     public void testWebSocketSubscription() {
         GraphQLQueryRequest subscriptionRequest = new GraphQLQueryRequest(
                 ReviewAddedGraphQLQuery.newRequest().showId(1).build(),
-                new ReviewAddedProjectionRoot().starScore()
+                new ReviewAddedProjectionRoot<>().starScore()
         );
 
         GraphQLQueryRequest addReviewMutation1 = new GraphQLQueryRequest(
                 AddReviewGraphQLQuery.newRequest().review(SubmittedReview.newBuilder().showId(1).starScore(5).username("DGS User").build()).build(),
-                new AddReviewProjectionRoot().starScore()
+                new AddReviewProjectionRoot<>().starScore()
         );
 
         GraphQLQueryRequest addReviewMutation2 = new GraphQLQueryRequest(
                 AddReviewGraphQLQuery.newRequest().review(SubmittedReview.newBuilder().showId(1).starScore(3).username("DGS User").build()).build(),
-                new AddReviewProjectionRoot().starScore()
+                new AddReviewProjectionRoot<>().starScore()
         );
 
         Flux<Integer> starScore = webSocketGraphQLClient.reactiveExecuteQuery(subscriptionRequest.serialize(), Collections.emptyMap()).map(r -> r.extractValue("reviewAdded.starScore"));

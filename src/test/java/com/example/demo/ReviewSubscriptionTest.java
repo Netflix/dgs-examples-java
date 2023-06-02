@@ -86,7 +86,7 @@ public class ReviewSubscriptionTest {
                                         .username("testuser")
                                         .starScore(5).build())
                         .build(),
-                new AddReviewProjectionRoot()
+                new AddReviewProjectionRoot<>()
                         .username()
                         .starScore());
         dgsQueryExecutor.execute(graphQLQueryRequest.serialize());
