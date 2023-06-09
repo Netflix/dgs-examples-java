@@ -1,7 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.datafetchers.ReviewsDataFetcher;
-import com.example.demo.datafetchers.ShowsDatafetcher;
+import com.example.demo.datafetchers.ShowsDataFetcher;
 import com.example.demo.dataloaders.ReviewsDataLoader;
 import com.example.demo.dataloaders.ReviewsDataLoaderWithContext;
 import com.example.demo.generated.client.*;
@@ -28,14 +28,13 @@ import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 
 
-@SpringBootTest(classes = {DgsAutoConfiguration.class, ReviewsDataLoaderWithContext.class, ShowsDatafetcher.class, ReviewsDataFetcher.class, ReviewsDataLoader.class, DateTimeScalar.class})
-class ShowsDatafetcherTest {
+@SpringBootTest(classes = {DgsAutoConfiguration.class, ReviewsDataLoaderWithContext.class, ShowsDataFetcher.class, ReviewsDataFetcher.class, ReviewsDataLoader.class, DateTimeScalar.class})
+class ShowsDataFetcherTest {
 
     @Autowired
     DgsQueryExecutor dgsQueryExecutor;
