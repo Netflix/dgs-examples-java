@@ -61,7 +61,7 @@ dependencies {
     implementation("com.netflix.graphql.dgs:graphql-dgs-extended-scalars")
     implementation("com.netflix.graphql.dgs:graphql-dgs-subscriptions-websockets-autoconfigure")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("net.datafaker:datafaker:1.+")
+    implementation("net.datafaker:datafaker:2.+")
     implementation("com.github.ben-manes.caffeine:caffeine")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-micrometer")
