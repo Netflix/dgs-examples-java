@@ -20,15 +20,9 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
 plugins {
     id("java")
-<<<<<<< HEAD
-    id("org.springframework.boot") version "3.0.0"
-    id("io.spring.dependency-management") version "1.1.0"
-    id("com.netflix.dgs.codegen") version "5.11.1"
-=======
     id("org.springframework.boot") version "3.1.2"
     id("io.spring.dependency-management") version "1.1.3"
     id("com.netflix.dgs.codegen") version "6.0.1"
->>>>>>> 49452d6 (UPdate spring boot plugin version.)
 }
 apply(plugin = "com.netflix.dgs.codegen")
 
