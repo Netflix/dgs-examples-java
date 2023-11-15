@@ -20,9 +20,15 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
 plugins {
     id("java")
+<<<<<<< HEAD
     id("org.springframework.boot") version "3.0.0"
     id("io.spring.dependency-management") version "1.1.0"
     id("com.netflix.dgs.codegen") version "5.11.1"
+=======
+    id("org.springframework.boot") version "3.1.2"
+    id("io.spring.dependency-management") version "1.1.3"
+    id("com.netflix.dgs.codegen") version "6.0.1"
+>>>>>>> 49452d6 (UPdate spring boot plugin version.)
 }
 apply(plugin = "com.netflix.dgs.codegen")
 
@@ -41,7 +47,7 @@ repositories {
 
 dependencyManagement {
 	imports {
-		mavenBom("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:6.0.0")
+	mavenBom("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:8.1.0-SNAPSHOT")
 	}
 }
 
@@ -56,7 +62,7 @@ repositories {
 }
 
 dependencies {
-    implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:6.0.0"))
+    implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:8.1.0-SNAPSHOT"))
     implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter")
     implementation("com.netflix.graphql.dgs:graphql-dgs-extended-scalars")
     implementation("com.netflix.graphql.dgs:graphql-dgs-subscriptions-websockets-autoconfigure")
@@ -66,7 +72,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-micrometer")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("com.netflix.graphql.dgs:graphql-dgs-client")
