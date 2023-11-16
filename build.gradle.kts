@@ -20,8 +20,8 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
 plugins {
     id("java")
-    id("org.springframework.boot") version "3.0.0"
-    id("io.spring.dependency-management") version "1.1.0"
+    id("org.springframework.boot") version "3.1.2"
+    id("io.spring.dependency-management") version "1.1.3"
     id("com.netflix.dgs.codegen") version "5.11.1"
 }
 apply(plugin = "com.netflix.dgs.codegen")
@@ -42,7 +42,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:6.0.0")
+        mavenBom("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:8.0.0")
     }
 }
 
@@ -59,10 +59,10 @@ repositories {
 // Set Kotlin version to 1.9.20 to avoid the issue described here:
 // https://youtrack.jetbrains.com/issue/KT-58021
 // TODO: after updating to Spring Boot 3.2.x, this workaround can be removed
-//extra["kotlin.version"] = "1.9.20"
+extra["kotlin.version"] = "1.9.20"
 
 dependencies {
-    implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:6.0.0"))
+    implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:8.0.0"))
     implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter")
     implementation("com.netflix.graphql.dgs:graphql-dgs-extended-scalars")
     implementation("com.netflix.graphql.dgs:graphql-dgs-subscriptions-websockets-autoconfigure")
