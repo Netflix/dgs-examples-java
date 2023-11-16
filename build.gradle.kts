@@ -55,7 +55,7 @@ repositories {
 extra["kotlin.version"] = "1.9.20"
 
 dependencies {
-    implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:8.0.1"))
+    implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:8.1.0-SNAPSHOT"))
     implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter")
     implementation("com.netflix.graphql.dgs:graphql-dgs-extended-scalars")
     implementation("com.netflix.graphql.dgs:graphql-dgs-subscriptions-websockets-autoconfigure")
@@ -65,6 +65,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-micrometer")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("jakarta.annotation:jakarta.annotation-api")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("com.netflix.graphql.dgs:graphql-dgs-client")
