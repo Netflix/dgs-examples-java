@@ -20,8 +20,8 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
 plugins {
     id("java")
-    id("org.springframework.boot") version "3.1.2"
-    id("io.spring.dependency-management") version "1.1.3"
+    id("org.springframework.boot") version "3.1.5"
+    id("io.spring.dependency-management") version "1.1.4"
     id("com.netflix.dgs.codegen") version "6.0.1"
 }
 apply(plugin = "com.netflix.dgs.codegen")
@@ -54,6 +54,11 @@ java {
 repositories {
     mavenLocal()
 }
+
+// Set Kotlin version to 1.9.20 to avoid the issue described here:
+// https://youtrack.jetbrains.com/issue/KT-58021
+// TODO: after updating to Spring Boot 3.2.x, this workaround can be removed
+extra["kotlin.version"] = "1.9.20"
 
 dependencies {
     implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:8.0.1"))
