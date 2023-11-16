@@ -21,7 +21,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 plugins {
     id("java")
     id("org.springframework.boot") version "3.1.5"
-    id("com.netflix.dgs.codegen") version "6.0.1"
+    id("com.netflix.dgs.codegen") version "5.11.1"
 }
 apply(plugin = "com.netflix.dgs.codegen")
 
