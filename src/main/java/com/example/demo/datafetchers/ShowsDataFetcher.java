@@ -10,15 +10,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @DgsComponent
-public class ShowsDatafetcher {
+public class ShowsDataFetcher {
     private final ShowsService showsService;
 
-    public ShowsDatafetcher(ShowsService showsService) {
+    public ShowsDataFetcher(ShowsService showsService) {
         this.showsService = showsService;
     }
 
     /**
-     * This datafetcher resolves the shows field on Query.
+     * This dataFetcher resolves the shows field on Query.
      * It uses an @InputArgument to get the titleFilter from the Query if one is defined.
      */
     @DgsQuery
