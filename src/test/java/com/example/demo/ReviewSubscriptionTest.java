@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.graphql.dgs.DgsQueryExecutor;
 import com.netflix.graphql.dgs.autoconfig.DgsAutoConfiguration;
 import com.netflix.graphql.dgs.client.codegen.GraphQLQueryRequest;
+import com.netflix.graphql.dgs.scalars.UploadScalar;
 import graphql.ExecutionResult;
 import org.junit.jupiter.api.Test;
 import org.reactivestreams.Publisher;
@@ -33,7 +34,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
  * Each time a review is added, a new ExecutionResult is given to subscriber.
  * Normally, this publisher is consumed by the Websocket/SSE subscription handler and you don't deal with this code directly, but for testing purposes it's useful to use the stream directly.
  */
-@SpringBootTest(classes = {DefaultReviewsService.class, ReviewsDataFetcher.class, DgsAutoConfiguration.class, DateTimeScalar.class})
+@SpringBootTest(classes = {DefaultReviewsService.class, ReviewsDataFetcher.class, DgsAutoConfiguration.class, DateTimeScalar.class, UploadScalar.class})
 public class ReviewSubscriptionTest {
     @Autowired
     DgsQueryExecutor dgsQueryExecutor;

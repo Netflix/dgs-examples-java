@@ -2,6 +2,12 @@ spring:
   application:
     name: dgs-example-java
 
+  graphql:
+    graphiql:
+      enabled: true
+    websocket:
+      path: /graphql
+
 ---
 spring:
   config:
