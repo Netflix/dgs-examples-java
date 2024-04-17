@@ -20,7 +20,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
 plugins {
     id("java")
-    id("org.springframework.boot") version "3.2.2"
+    id("org.springframework.boot") version "3.2.4"
     id("io.spring.dependency-management") version "1.1.4"
     id("com.netflix.dgs.codegen") version "6.1.4"
 }
@@ -42,7 +42,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:8.0.0")
+        mavenBom("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:8.5.6")
     }
 }
 
@@ -62,10 +62,11 @@ repositories {
 extra["kotlin.version"] = "1.9.20"
 
 dependencies {
-    implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:8.0.0"))
-    implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter")
+    implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:8.5.6"))
+    implementation("com.netflix.graphql.dgs:graphql-dgs-spring-graphql-starter")
     implementation("com.netflix.graphql.dgs:graphql-dgs-extended-scalars")
-    implementation("com.netflix.graphql.dgs:graphql-dgs-subscriptions-websockets-autoconfigure")
+    implementation("org.springframework.boot:spring-boot-starter-websocket")
+    implementation("name.nkonev.multipart-spring-graphql:multipart-spring-graphql:1.1.4")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("net.datafaker:datafaker:2.+")
     implementation("com.github.ben-manes.caffeine:caffeine")
