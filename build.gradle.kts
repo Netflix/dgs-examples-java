@@ -66,7 +66,7 @@ dependencies {
     implementation("com.netflix.graphql.dgs:graphql-dgs-spring-graphql-starter")
     implementation("com.netflix.graphql.dgs:graphql-dgs-extended-scalars")
     implementation("org.springframework.boot:spring-boot-starter-websocket")
-    implementation("name.nkonev.multipart-spring-graphql:multipart-spring-graphql:1.1.4")
+    implementation("name.nkonev.multipart-spring-graphql:multipart-spring-graphql:1.2.1")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("net.datafaker:datafaker:2.+")
     implementation("com.github.ben-manes.caffeine:caffeine")
