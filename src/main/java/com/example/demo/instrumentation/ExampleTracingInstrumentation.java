@@ -4,12 +4,16 @@ import graphql.ExecutionResult;
 import graphql.execution.instrumentation.InstrumentationContext;
 import graphql.execution.instrumentation.InstrumentationState;
 import graphql.execution.instrumentation.SimpleInstrumentation;
+import graphql.execution.instrumentation.SimplePerformantInstrumentation;
+import graphql.execution.instrumentation.parameters.InstrumentationCreateStateParameters;
 import graphql.execution.instrumentation.parameters.InstrumentationExecutionParameters;
 import graphql.execution.instrumentation.parameters.InstrumentationFieldFetchParameters;
 import graphql.schema.DataFetcher;
 import graphql.schema.GraphQLNonNull;
 import graphql.schema.GraphQLObjectType;
 import graphql.schema.GraphQLOutputType;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -17,22 +21,23 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.CompletableFuture;
 
 @Component
-public class ExampleTracingInstrumentation extends SimpleInstrumentation {
+public class ExampleTracingInstrumentation extends SimplePerformantInstrumentation {
     private final static Logger LOGGER = LoggerFactory.getLogger(ExampleTracingInstrumentation.class);
+
     @Override
-    public InstrumentationState createState() {
+    public @Nullable InstrumentationState createState(InstrumentationCreateStateParameters parameters) {
         return new TracingState();
     }
 
     @Override
-    public InstrumentationContext<ExecutionResult> beginExecution(InstrumentationExecutionParameters parameters) {
-        TracingState tracingState = parameters.getInstrumentationState();
+    public @Nullable InstrumentationContext<ExecutionResult> beginExecution(InstrumentationExecutionParameters parameters, InstrumentationState state) {
+        TracingState tracingState = (TracingState) state;
         tracingState.startTime = System.currentTimeMillis();
-        return super.beginExecution(parameters);
+        return super.beginExecution(parameters, state);
     }
 
     @Override
-    public DataFetcher<?> instrumentDataFetcher(DataFetcher<?> dataFetcher, InstrumentationFieldFetchParameters parameters) {
+    public @NotNull DataFetcher<?> instrumentDataFetcher(DataFetcher<?> dataFetcher, InstrumentationFieldFetchParameters parameters, InstrumentationState state) {
         // We only care about user code
         if(parameters.isTrivialDataFetcher()) {
             return dataFetcher;
@@ -56,12 +61,12 @@ public class ExampleTracingInstrumentation extends SimpleInstrumentation {
     }
 
     @Override
-    public CompletableFuture<ExecutionResult> instrumentExecutionResult(ExecutionResult executionResult, InstrumentationExecutionParameters parameters) {
-        TracingState tracingState = parameters.getInstrumentationState();
+    public @NotNull CompletableFuture<ExecutionResult> instrumentExecutionResult(ExecutionResult executionResult, InstrumentationExecutionParameters parameters, InstrumentationState state) {
+        TracingState tracingState = (TracingState) state;
         long totalTime = System.currentTimeMillis() - tracingState.startTime;
         LOGGER.info("Total execution time: {}ms", totalTime);
 
-        return super.instrumentExecutionResult(executionResult, parameters);
+        return super.instrumentExecutionResult(executionResult, parameters, state);
     }
 
     private String findDatafetcherTag(InstrumentationFieldFetchParameters parameters) {
