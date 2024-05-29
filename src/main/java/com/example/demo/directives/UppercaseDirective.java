@@ -13,10 +13,7 @@ public class UppercaseDirective implements SchemaDirectiveWiring {
 
     @Override
     public GraphQLFieldDefinition onField(SchemaDirectiveWiringEnvironment<GraphQLFieldDefinition> env) {
-        GraphQLFieldsContainer fieldsContainer = env.getFieldsContainer();
-        GraphQLFieldDefinition fieldDefinition = env.getFieldDefinition();
-
-        DataFetcher<?> originalDataFetcher = env.getCodeRegistry().getDataFetcher(fieldsContainer, fieldDefinition);
+        DataFetcher<?> originalDataFetcher = env.getFieldDataFetcher();
         DataFetcher<?> dataFetcher = DataFetcherFactories.wrapDataFetcher(
                 originalDataFetcher,
                 (dataFetchingEnvironment, value) -> {
@@ -27,7 +24,7 @@ public class UppercaseDirective implements SchemaDirectiveWiring {
                 }
         );
 
-        env.getCodeRegistry().dataFetcher(fieldsContainer, fieldDefinition, dataFetcher);
-        return fieldDefinition;
+        env.setFieldDataFetcher(dataFetcher);
+        return env.getElement();
     }
 }
