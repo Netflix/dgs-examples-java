@@ -13,7 +13,6 @@ import com.example.demo.services.DefaultReviewsService;
 import com.example.demo.services.ShowsService;
 import com.jayway.jsonpath.TypeRef;
 import com.netflix.graphql.dgs.DgsQueryExecutor;
-import com.netflix.graphql.dgs.autoconfig.DgsAutoConfiguration;
 import com.netflix.graphql.dgs.client.codegen.GraphQLQueryRequest;
 import com.netflix.graphql.dgs.scalars.UploadScalar;
 import com.netflix.graphql.dgs.test.EnableDgsTest;
