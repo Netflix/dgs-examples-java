@@ -16,6 +16,7 @@ import com.netflix.graphql.dgs.DgsQueryExecutor;
 import com.netflix.graphql.dgs.autoconfig.DgsAutoConfiguration;
 import com.netflix.graphql.dgs.client.codegen.GraphQLQueryRequest;
 import com.netflix.graphql.dgs.scalars.UploadScalar;
+import com.netflix.graphql.dgs.test.EnableDgsTest;
 import graphql.ExecutionResult;
 import org.assertj.core.util.Maps;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +35,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 
 
-@SpringBootTest(classes = {DgsAutoConfiguration.class, ReviewsDataLoaderWithContext.class, ShowsDataFetcher.class, ReviewsDataFetcher.class, ReviewsDataLoader.class, DateTimeScalar.class, UploadScalar.class})
+@SpringBootTest(classes = {ReviewsDataLoaderWithContext.class, ShowsDataFetcher.class, ReviewsDataFetcher.class, ReviewsDataLoader.class, DateTimeScalar.class, UploadScalar.class})
+@EnableDgsTest
 class ShowsDataFetcherTest {
 
     @Autowired
