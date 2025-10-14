@@ -17,10 +17,15 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.*
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
+buildscript {
+    repositories {
+        maven {url = uri("https://repo.spring.io/milestone/")}
+    }
+}
 
 plugins {
     id("java")
-    id("org.springframework.boot") version "3.3.0"
+    id("org.springframework.boot") version "4.0.0-M3"
     id("io.spring.dependency-management") version "1.1.4"
     id("com.netflix.dgs.codegen") version "6.1.4"
 }
@@ -44,7 +49,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:8.5.6")
+        mavenBom("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:10.5.0-SNAPSHOT")
     }
 }
 
@@ -54,27 +59,23 @@ java {
     }
 }
 
-repositories {
-    mavenLocal()
-}
-
 // Set Kotlin version to 1.9.20 to avoid the issue described here:
 // https://youtrack.jetbrains.com/issue/KT-58021
 // TODO: after updating to Spring Boot 3.2.x, this workaround can be removed
 extra["kotlin.version"] = "1.9.20"
 
 dependencies {
-    implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:8.5.6"))
     implementation("com.netflix.graphql.dgs:graphql-dgs-spring-graphql-starter")
     implementation("com.netflix.graphql.dgs:graphql-dgs-extended-scalars")
     implementation("org.springframework.boot:spring-boot-starter-websocket")
-    implementation("name.nkonev.multipart-spring-graphql:multipart-spring-graphql:1.+")
+    implementation("name.nkonev.multipart-spring-graphql:multipart-spring-graphql:2.0.0-RC2")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("net.datafaker:datafaker:2.+")
     implementation("com.github.ben-manes.caffeine:caffeine")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-micrometer")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("com.graphql-java:graphql-java")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     implementation("com.netflix.graphql.dgs:graphql-dgs-spring-graphql-starter-test")

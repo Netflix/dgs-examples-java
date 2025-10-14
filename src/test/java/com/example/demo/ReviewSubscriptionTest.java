@@ -8,7 +8,6 @@ import com.example.demo.generated.types.SubmittedReview;
 import com.example.demo.scalars.DateTimeScalar;
 import com.example.demo.services.DefaultReviewsService;
 import com.example.demo.services.ShowsService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.graphql.dgs.DgsQueryExecutor;
 import com.netflix.graphql.dgs.client.codegen.GraphQLQueryRequest;
 import com.netflix.graphql.dgs.scalars.UploadScalar;
@@ -20,7 +19,8 @@ import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.List;
 import java.util.Map;
@@ -40,7 +40,7 @@ public class ReviewSubscriptionTest {
     @Autowired
     DgsQueryExecutor dgsQueryExecutor;
 
-    @MockBean
+    @MockitoBean
     ShowsService showsService;
 
     @Test

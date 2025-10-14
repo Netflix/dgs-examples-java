@@ -13,5 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven {url = uri("https://repo.spring.io/milestone/")}
+    }
+}
 rootProject.name = "dgs-examples-java"
