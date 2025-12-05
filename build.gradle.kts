@@ -25,7 +25,7 @@ buildscript {
 
 plugins {
     id("java")
-    id("org.springframework.boot") version "4.0.0-RC1"
+    id("org.springframework.boot") version "4.0.0"
     id("io.spring.dependency-management") version "1.1.4"
     id("com.netflix.dgs.codegen") version "8.1.1"
 }
@@ -49,7 +49,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:10.5.0-SNAPSHOT")
+        mavenBom("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:11.0.0")
     }
 }
 
@@ -68,7 +68,7 @@ dependencies {
     implementation("com.netflix.graphql.dgs:graphql-dgs-spring-graphql-starter")
     implementation("com.netflix.graphql.dgs:graphql-dgs-extended-scalars")
     implementation("org.springframework.boot:spring-boot-starter-websocket")
-    implementation("name.nkonev.multipart-spring-graphql:multipart-spring-graphql:2.0.0-RC2")
+    implementation("name.nkonev.multipart-spring-graphql:multipart-spring-graphql:2.0.0")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("net.datafaker:datafaker:2.+")
     implementation("com.github.ben-manes.caffeine:caffeine")
