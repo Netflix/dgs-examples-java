@@ -20,9 +20,9 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
 plugins {
     id("java")
-    id("org.springframework.boot") version "3.3.0"
-    id("io.spring.dependency-management") version "1.1.4"
-    id("com.netflix.dgs.codegen") version "6.1.4"
+    id("org.springframework.boot") version "3.4.4"
+    id("io.spring.dependency-management") version "1.1.7"
+    id("com.netflix.dgs.codegen") version "8.3.0"
 }
 apply(plugin = "com.netflix.dgs.codegen")
 
@@ -61,7 +61,7 @@ repositories {
 // Set Kotlin version to 1.9.20 to avoid the issue described here:
 // https://youtrack.jetbrains.com/issue/KT-58021
 // TODO: after updating to Spring Boot 3.2.x, this workaround can be removed
-extra["kotlin.version"] = "1.9.20"
+extra["kotlin.version"] = "2.2.0"
 
 dependencies {
     implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:8.5.6"))
@@ -82,6 +82,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-webflux")
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.springframework.security:spring-security-test")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.withType<com.netflix.graphql.dgs.codegen.gradle.GenerateJavaTask> {
